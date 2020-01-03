@@ -1,0 +1,60 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: 'AWS::Serverless-2016-10-31'
+Description: An AWS Serverless Specification template describing your function.
+Resources:
+  TestFunction:
+    Type: 'AWS::Serverless::Function'
+    Properties:
+      Handler: 'com.ecare.LambdaHandler::handleRequest'
+      Runtime: java8
+      CodeUri: .
+      Description: ''
+      MemorySize: 512
+      Timeout: 15
+      Role: 'arn:aws:iam::646981483170:role/ExecuteLambdaFunction'
+      Events:
+        Api1:
+          Type: Api
+          Properties:
+            Path: /MyResource
+            Method: ANY
+        Api2:
+          Type: Api
+          Properties:
+            Path: /eCare/executepharmacyaction
+            Method: POST
+        Api3:
+          Type: Api
+          Properties:
+            Path: /MyResource
+            Method: ANY
+        Api4:
+          Type: Api
+          Properties:
+            Path: /eCare/executereviewaction
+            Method: POST
+        Api5:
+          Type: Api
+          Properties:
+            Path: /eCare/executedoctorcheckupaction
+            Method: POST
+        Api6:
+          Type: Api
+          Properties:
+            Path: /eCare/registerpatient
+            Method: POST
+        Api7:
+          Type: Api
+          Properties:
+            Path: /eCare/executelaboratoryaction
+            Method: POST
+        Api8:
+          Type: Api
+          Properties:
+            Path: /eCare/getpatientdetail
+            Method: GET
+      Environment:
+        Variables:
+          amazon_aws_accesskey: AKIAZNIYZ7KRGXZGSDN6
+          amazon_aws_secretkey: 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
+          amazon_dynamodb_endpoint: 'https://dynamodb.ap-south-1.amazonaws.com'

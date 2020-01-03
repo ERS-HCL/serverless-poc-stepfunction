@@ -1,0 +1,47 @@
+public static void main(final String[] args) throws Exception {
+		PatientRegistrationActivity patientRegistrationActivity = new PatientRegistrationActivity();
+		ClientConfiguration clientConfiguration = new ClientConfiguration();
+		clientConfiguration.setSocketTimeout((int) TimeUnit.SECONDS.toMillis(70));
+		System.out.println("************************************start exectuion***********************");
+		AWSStepFunctions client = AWSStepFunctionsClientBuilder.standard().withRegion(Regions.AP_SOUTH_1)
+				.withCredentials(new EnvironmentVariableCredentialsProvider())
+				.withClientConfiguration(clientConfiguration).build();
+		System.out.println("************************************start exectuion**********************");
+		LOGGER.info("sadddddddddddddddddddddddddddddddddddd");
+		StartExecutionRequest startExecutionRequest1 = getStartRequestforStateMachineTest("p1");
+		StartExecutionRequest startExecutionRequest2 = getStartRequestforStateMachineTest("p2");
+		// StartExecutionResult startExecutionResult1 =
+		// client.startExecution(startExecutionRequest1);
+		// System.out.println("Exceution started for StartExecutionResult1 " +
+		// startExecutionResult1.getExecutionArn());
+		// StartExecutionResult startExecutionResult2 =
+		// client.startExecution(startExecutionRequest2);
+		// System.out.println("Exceution started for StartExecutionResult2 " +
+		// startExecutionResult2.getExecutionArn());
+		while (true) {
+			
+			GetActivityTaskResult getActivityTaskResult = client.getActivityTask(new GetActivityTaskRequest()
+					.withActivityArn("arn:aws:states:ap-south-1:646981483170:activity:Register-patient"));
+
+			if (getActivityTaskResult.getTaskToken() != null) {
+				try {
+					JsonNode json = Jackson.jsonNodeOf(getActivityTaskResult.getInput());
+					/*
+					 * if (json.has("patientId") && "p1".equals(json.get("patientId").asText())) {
+					 */
+					String outputResult = patientRegistrationActivity.setStatus(json.get("patientId").textValue());
+					System.out.println("outputResult " + outputResult);
+					SendTaskSuccessRequest sendTaskRequest = new SendTaskSuccessRequest().withOutput(outputResult)
+							.withTaskToken(getActivityTaskResult.getTaskToken());
+					client.sendTaskSuccess(sendTaskRequest);
+					// }
+
+				} catch (Exception e) {
+					client.sendTaskFailure(
+							new SendTaskFailureRequest().withTaskToken(getActivityTaskResult.getTaskToken()));
+				}
+			} else {
+				Thread.sleep(1000);
+			}
+		}
+	}

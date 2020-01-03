@@ -1,0 +1,48 @@
+plugins {
+  id 'org.springframework.boot' version '2.1.1.RELEASE'
+  id 'com.gradle.build-scan' version '2.1' 
+}
+
+apply plugin: 'java'
+
+repositories {
+  jcenter()
+  mavenLocal()
+  mavenCentral()
+}
+
+buildScan {
+  termsOfServiceUrl = 'https://gradle.com/terms-of-service'
+  termsOfServiceAgree = 'yes'
+}
+
+dependencies {
+  compile('org.springframework.boot:spring-boot-starter-web:2.1.1.RELEASE')
+  compile('com.amazonaws.serverless:aws-serverless-java-container-spring:[1.0,)') {
+    exclude group: 'org.slf4j'
+  }
+  compile('org.slf4j:slf4j-api:1.7.25')
+  compile('io.symphonia:lambda-logging:1.0.1:no-config')
+  // For deserializing various AWS events
+  compile('com.amazonaws:aws-lambda-java-events:2.2.5')
+  compile('com.fasterxml.jackson.datatype:jackson-datatype-joda:2.9.7')
+  compile('com.amazonaws:aws-java-sdk-stepfunctions:1.11.601')
+  compile('com.github.derjust:spring-data-dynamodb:5.1.0')
+  compile('com.amazonaws:aws-java-sdk-dynamodb:1.11.34')
+  compile('com.amazonaws:aws-java-sdk-stepfunctions:1.11.601')
+
+  testCompile("junit:junit:4.12")
+}
+
+task buildZipFull(type: Zip) {
+  baseName = "ecare-java-spring-boot"
+   from compileJava
+   from processResources
+   into('lib') {
+    from(configurations.compileClasspath) {
+      exclude 'tomcat-embed-*'
+    }
+   }
+}
+
+build.dependsOn buildZipFull
