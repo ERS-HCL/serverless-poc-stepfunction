@@ -15,7 +15,7 @@ import com.amazonaws.services.stepfunctions.model.GetActivityTaskResult;
 import com.amazonaws.services.stepfunctions.model.SendTaskHeartbeatRequest;
 import com.amazonaws.services.stepfunctions.model.SendTaskSuccessRequest;
 import com.amazonaws.util.json.Jackson;
-import com.ecare.activity.Activity;
+import com.ecare.activity.StepFunctionActivity;
 import com.ecare.constants.ActivityEnum;
 import com.ecare.constants.Params;
 import com.ecare.model.db.PatientStatus;
@@ -24,7 +24,7 @@ import com.ecare.utilities.DateTimeUtils;
 import com.fasterxml.jackson.databind.JsonNode;
 
 @Component("laboratoryActivity")
-public class LaboratoryActivity implements Activity {
+public class LaboratoryActivity implements StepFunctionActivity {
 	private static final Logger LOGGER = LoggerFactory.getLogger(LaboratoryActivity.class);
 	@Autowired
 	private AWSStepFunctions awsStepFunctionClient;

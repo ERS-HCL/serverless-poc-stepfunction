@@ -6,32 +6,32 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
-import com.ecare.activity.Activity;
+import com.ecare.activity.StepFunctionActivity;
 import com.ecare.constants.ActivityEnum;
 
 @Component
 public class ActivityFactory {
 	@Autowired
 	@Qualifier("registrationActivity")
-	private Activity registrationActivity;
+	private StepFunctionActivity  registrationActivity;
 	@Autowired
 	@Qualifier("doctorCheckupActivity")
-	private Activity doctorCheckupActivity;
+	private StepFunctionActivity  doctorCheckupActivity;
 	@Autowired
 	@Qualifier("laboratoryActivity")
-	private Activity laboratoryActivity;
+	private StepFunctionActivity  laboratoryActivity;
 	@Autowired
 	@Qualifier("pharmacyActivity")
-	private Activity pharmacyActivity;
+	private StepFunctionActivity  pharmacyActivity;
 	@Autowired
 	@Qualifier("registrationReminderActivity")
-	private Activity registrationReminderActivity;
+	private StepFunctionActivity  registrationReminderActivity;
 	@Autowired
 	@Qualifier("reviewActivity")
-	private Activity reviewActivity;
+	private StepFunctionActivity  reviewActivity;
 
-	public Optional<Activity> getInstance(ActivityEnum activityEnum) {
-		Optional<Activity> activityOptional = null;
+	public Optional<StepFunctionActivity> getInstance(ActivityEnum activityEnum) {
+		Optional<StepFunctionActivity> activityOptional = null;
 		switch (activityEnum) {
 		case REGISTER_PATIENT:
 			activityOptional = Optional.of(registrationActivity);

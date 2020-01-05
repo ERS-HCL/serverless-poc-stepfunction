@@ -17,7 +17,7 @@ import com.amazonaws.services.stepfunctions.model.SendTaskSuccessRequest;
 import com.amazonaws.services.stepfunctions.model.StartExecutionRequest;
 import com.amazonaws.services.stepfunctions.model.StartExecutionResult;
 import com.amazonaws.util.json.Jackson;
-import com.ecare.activity.Activity;
+import com.ecare.activity.StepFunctionActivity;
 import com.ecare.constants.ActivityEnum;
 import com.ecare.constants.Params;
 import com.ecare.exception.AlreadyRegistertedException;
@@ -26,7 +26,7 @@ import com.ecare.model.db.repository.PatientRepository;
 import com.fasterxml.jackson.databind.JsonNode;
 
 @Component("registrationActivity")
-public class PatientRegistrationActivity implements Activity {
+public class PatientRegistrationActivity implements StepFunctionActivity {
 	private static final Logger LOGGER = LoggerFactory.getLogger(PatientRegistrationActivity.class);
 
 	@Autowired
