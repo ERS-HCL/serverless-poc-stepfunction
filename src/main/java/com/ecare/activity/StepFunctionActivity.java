@@ -18,8 +18,8 @@ import com.ecare.utilities.DateTimeUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public interface Activity {
-	String ASM_ARN = "arn:aws:states:ap-south-1:44:stateMachine:eCare";
-	String ACTIVITY_ARN_PREFIX = "arn:aws:states:ap-south-1:44:activity:";
+	String ASM_ARN = "arn:aws:states:ap-south-1:44:stateMachine:eCare"; //account no to be replaced here with 44
+	String ACTIVITY_ARN_PREFIX = "arn:aws:states:ap-south-1:44:activity:"; //account no to be replaced here 44 
 	String ACTIVITY_REGISTER_PATIENT_ARN = ACTIVITY_ARN_PREFIX + "Register-patient";
 	String ACTIVITY_REGISTERATION_REMINDER_ARN = ACTIVITY_ARN_PREFIX + "RegistrationReminderActivity";
 	String ACTIVITY_LABORATORY_ARN = ACTIVITY_ARN_PREFIX + "LaboratoryActivity";
